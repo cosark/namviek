@@ -1,0 +1,13 @@
+FROM node:20-alpine
+
+COPY . .
+
+RUN yarn install && yarn global add nx@latest 
+
+# Copy the entrypoint script into the image and make it executable
+COPY entrypoint.sh /usr/src/app/entrypoint.sh
+RUN chmod +x /usr/src/app/entrypoint.sh
+
+# The command to run by default when the container starts
+CMD ["yarn", "frontend"]
+EXPOSE 4200
