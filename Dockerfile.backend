@@ -1,21 +1,32 @@
 FROM node:20-alpine
+
+# Install dependencies for the application
 RUN apk add --update --no-cache python3 make g++ && \
     ln -sf python3 /usr/bin/python && \
     apk add --no-cache build-base cairo-dev jpeg-dev pango-dev giflib-dev && \
     apk add --no-cache pixman-dev pangomm-dev libjpeg-turbo-dev freetype-dev && \
     apk add --no-cache pkgconfig pkgconf
-    
+
+# Copy the application files into the image
 COPY . .
 
-RUN yarn install && yarn global add nx@latest && yarn add --dev prisma@latest && yarn add @prisma/client@latest
+# Install NPM/Yarn packages including Prisma
+RUN yarn install && yarn global add nx@latest
+# Explicitly add Prisma packages to workspace root 
+RUN yarn add -W --dev prisma@latest && yarn add -W @prisma/client@latest
 
 # Copy the entrypoint script into the image and make it executable
 COPY entrypoint.sh /usr/src/app/entrypoint.sh
 RUN chmod +x /usr/src/app/entrypoint.sh
+
+# Set the working directory for any following commands
+WORKDIR /usr/src/app
+
+# Expose the port the application runs on
+EXPOSE 3333
 
 # Use the entrypoint script to setup the database
 ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
 
 # The command to run by default when the container starts
 CMD ["yarn", "backend"]
-EXPOSE 3333
