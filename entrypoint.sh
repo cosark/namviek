@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e
-
+yarn nx@latest init
 # Run yarn generate2 if needed
 yarn generate2
 
