@@ -11,7 +11,7 @@ RUN apk add --update --no-cache python3 make g++ && \
 COPY . .
 
 # Install NPM/Yarn packages including Prisma
-RUN yarn install && yarn global add nx@latest
+RUN yarn install && yarn add -w nx@latest
 # Explicitly add Prisma packages to workspace root 
 RUN yarn add -W --dev prisma@latest && yarn add -W @prisma/client@latest
 
