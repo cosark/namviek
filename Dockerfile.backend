@@ -7,7 +7,7 @@ RUN apk add --update --no-cache python3 make g++ && \
     
 COPY . .
 
-RUN yarn install && yarn global add nx@latest 
+RUN yarn install && yarn global add nx@latest && yarn add --dev prisma@latest && yarn add @prisma/client@latest
 
 # Copy the entrypoint script into the image and make it executable
 COPY entrypoint.sh /usr/src/app/entrypoint.sh
