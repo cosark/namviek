@@ -3,7 +3,9 @@ RUN apk add --update --no-cache python3 make g++ && \
     ln -sf python3 /usr/bin/python && \
     apk add --no-cache build-base cairo-dev jpeg-dev pango-dev giflib-dev && \
     apk add --no-cache pixman-dev pangomm-dev libjpeg-turbo-dev freetype-dev && \
-    apk add --no-cache pkgconfig pkgconfCOPY . .
+    apk add --no-cache pkgconfig pkgconf
+    
+COPY . .
 
 RUN yarn install && yarn global add nx@latest 
 
